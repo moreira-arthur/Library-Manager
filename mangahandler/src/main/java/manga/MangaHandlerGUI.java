@@ -82,7 +82,8 @@ public class MangaHandlerGUI {
                     JOptionPane.showMessageDialog(frame, "Manga added successfully!");
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frame, "Error adding manga.");
+                    JOptionPane.showMessageDialog(frame, "Error adding manga." + "\n" + ex.getMessage());
+
                 }
             }
         });
@@ -285,40 +286,35 @@ public class MangaHandlerGUI {
 
         // Aba de visualização de mangás
         JPanel viewPanel = new JPanel(new BorderLayout());
-        viewPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JTextArea viewResultsArea = new JTextArea();
+        viewResultsArea.setEditable(false);
+        JScrollPane viewScrollPane = new JScrollPane(viewResultsArea);
 
-        JTextArea viewTextArea = new JTextArea();
-        viewTextArea.setEditable(false);
-        JScrollPane viewScrollPane = new JScrollPane(viewTextArea);
-
-        JButton refreshButton = new JButton("Refresh");
+        JButton refreshButton = new JButton("Refresh List");
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                viewTextArea.setText(manager.getAllMangasAsString());
+                try {
+                    List<String> mangaTitles = manager.getAllMangaTitles();
+                    viewResultsArea.setText("");
+                    for (String title : mangaTitles) {
+                        viewResultsArea.append(title + "\n");
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, "Error loading manga titles.");
+                }
             }
         });
 
-        JPanel refreshPanel = new JPanel();
-        refreshPanel.add(refreshButton);
-
         viewPanel.add(viewScrollPane, BorderLayout.CENTER);
-        viewPanel.add(refreshPanel, BorderLayout.SOUTH);
+        viewPanel.add(refreshButton, BorderLayout.SOUTH);
 
         tabbedPane.addTab("View All Mangas", viewPanel);
 
-        
-
+    
         frame.getContentPane().add(tabbedPane);
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MangaHandlerGUI();
-            }
-        });
-    }
 }

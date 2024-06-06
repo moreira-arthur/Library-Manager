@@ -4,50 +4,101 @@ import java.io.*;
 import java.util.*;
 
 public class MangaHandler {
+
     private static final String DATA_FILE = "manga.dat";
     private static final String INDEX_FILE = "index.dat";
     private static final String TITLE_INDEX_FILE = "title_index.dat";
     private static final int RECORD_SIZE = 2048;
+    private List<Long> deletedRecordsSpaces;
+
+    public MangaHandler() {
+        deletedRecordsSpaces = new ArrayList<>();
+        loadDeletedRecordsSpaces();
+    }
+
+    private void loadDeletedRecordsSpaces(){
+        try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")){
+            long pointer = 0;
+            while (pointer < dataFile.length()) {
+                dataFile.seek(pointer);
+                char status = dataFile.readChar();
+                if (status == '*') {
+                    deletedRecordsSpaces.add(pointer);
+                }
+                pointer += RECORD_SIZE;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void addManga(Manga manga) throws IOException {
+        long filePointer;
+        if (!deletedRecordsSpaces.isEmpty()) {
+            filePointer = deletedRecordsSpaces.remove(0);
+        } else {
+            try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
+                if(getIndex(manga.getIsbn()) != -1){
+                    throw new IOException("Manga already exists");
+                }else{
+                    filePointer = dataFile.length();
+                }
+            }catch(FileNotFoundException e){
+                System.out.println("File not found, creating new file...");
+                filePointer = 0;
+            }
+        }
+
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
-            long filePointer = dataFile.length();
             dataFile.seek(filePointer);
             writeManga(dataFile, manga);
             addIndex(manga.getIsbn(), filePointer);
             addTitleIndex(manga.getTitle(), manga.getIsbn());
+        }catch(FileNotFoundException e){
+            System.out.println("FIle not found, creating new file...");
         }
     }
 
-    public Manga getManga(String isbn) throws IOException {
+    public Manga getManga(String isbn) throws IOException{
         long filePointer = getIndex(isbn);
-        if (filePointer == -1) return null;
+        if (filePointer == -1){
+            System.out.println("Manga not found");
+            return null;
+        }
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "r")) {
             dataFile.seek(filePointer);
             return readManga(dataFile);
+        }catch (FileNotFoundException e){
+            System.out.println("File not found");
+            return null;
         }
     }
 
     public void updateManga(String isbn, Manga updatedManga) throws IOException {
         long filePointer = getIndex(isbn);
-        if (filePointer == -1) return;
+        if (filePointer == -1){
+            throw new IOException("Manga not found");
+        }
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
             dataFile.seek(filePointer);
             writeManga(dataFile, updatedManga);
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
         }
     }
 
     public void deleteManga(String isbn) throws IOException {
         long filePointer = getIndex(isbn);
         if (filePointer == -1){
-            throw new IOException("Manga não encontrado");
+            throw new IOException("Manga not found");
         }
             
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
             dataFile.seek(filePointer);
             // Marca o registro como deletado
             dataFile.writeChar('*');
+            deletedRecordsSpaces.add(filePointer);
         }
         removeIndex(isbn);
         removeTitleIndex(isbn);
@@ -91,7 +142,7 @@ public class MangaHandler {
         file.writeUTF(manga.getPublisher());
         file.writeInt(manga.getEditionYear());
         file.writeInt(manga.getTotalVolumes());
-        file.writeInt(manga.getAcquiredVolumesCount());
+        file.writeInt(manga.getAcquiredVolumesCounter());
         for (Integer volume : manga.getAcquiredVolumes()) {
             file.writeInt(volume);
         }
@@ -294,62 +345,20 @@ public class MangaHandler {
         tempFile.renameTo(new File(TITLE_INDEX_FILE));
     }
 
-    public String getAllMangasAsString(){
-        try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "r")) {
-            StringBuilder mangas = new StringBuilder();
-            while (dataFile.getFilePointer() < dataFile.length()) {
-                mangas.append(readManga(dataFile).toString());
-                mangas.append("\n");
+    public List<String> getAllMangaTitles() throws IOException {
+        List<String> titles = new ArrayList<>();
+        try (RandomAccessFile indexFile = new RandomAccessFile(TITLE_INDEX_FILE, "rw")) {
+            indexFile.seek(0);
+            while (indexFile.getFilePointer() < indexFile.length()) {
+                String title = indexFile.readUTF();
+                indexFile.readUTF(); // Skip the ISBN
+                titles.add(title);
             }
-            return mangas.toString();
         }
-        catch(FileNotFoundException e){
-            System.out.println("Arquivo não encontrado");
-            return "";
-        }
-        catch(IOException e){
-            System.out.println("Erro de I/O");
-            return "";
-        }
-        catch(Exception e){
-            System.out.println("Erro desconhecido");
-            return "";
-        }
+        return titles;
     }
 }
 
-class IndexEntry {
-    private String isbn;
-    private long filePointer;
 
-    public IndexEntry(String isbn, long filePointer) {
-        this.isbn = isbn;
-        this.filePointer = filePointer;
-    }
 
-    public String getIsbn() {
-        return isbn;
-    }
 
-    public long getFilePointer() {
-        return filePointer;
-    }
-}
-
-class TitleIndexEntry {
-    private String title;
-    private String isbn;
-
-    public TitleIndexEntry(String title, String isbn) {
-        this.title = title;
-        this.isbn = isbn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-}

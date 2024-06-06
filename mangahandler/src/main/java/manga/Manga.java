@@ -36,7 +36,18 @@ public class Manga implements Serializable{
     
     @Override
     public String toString() {
-        return "Manga : " + title + "\n" + "ISBN : " + isbn + "\n" + "Authors : " + authors + "\n" + "Start Year : " + startYear + "\n" + "End Year : " + endYear + "\n" + "Publisher : " + publisher + "\n" + "Genre : " + genre + "\n" + "Magazine : " + magazine + "\n" + "Edition Year : " + editionYear + "\n" + "Total Volumes : " + totalVolumes + "\n" + "Acquired Volumes : " + acquiredVolumes + "\n";
+        return "Manga : " + title + "\n"
+                + "ISBN : " + isbn + "\n" 
+                + "Authors : " + authors + "\n" 
+                + "Start Year : " + startYear + "\n" 
+                + "End Year : " + endYear + "\n" 
+                + "Publisher : " + publisher + "\n" 
+                + "Genre : " + genre + "\n" 
+                + "Magazine : " + magazine + "\n" 
+                + "Edition Year : " + editionYear + "\n" 
+                + "Total Volumes : " + totalVolumes + "\n" 
+                + "Amount of acquired volumes: "  + acquiredVolumesCounter  + "\n"
+                + "Acquired Volumes : " + acquiredVolumes + "\n";
     }
 
     public String getIsbn() {
@@ -79,7 +90,7 @@ public class Manga implements Serializable{
         return totalVolumes;
     }
 
-    public int getAcquiredVolumesCount() {
+    public int getAcquiredVolumesCounter() {
         return acquiredVolumesCounter;
     }
 
