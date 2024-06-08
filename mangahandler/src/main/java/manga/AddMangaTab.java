@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Tab for adding manga
+ * It has fields for the manga attributes and a button to add the manga
+ * It implements the TabModel interface
+ */
 public class AddMangaTab implements TabModel{
     private JFrame frame;
     private MangaHandler handler;
@@ -26,7 +31,14 @@ public class AddMangaTab implements TabModel{
     private JTextField addAcquiredVolumesField;
     private JButton addButton;
 
-
+    /**
+     * Constructor for the AddMangaTab
+     * It initializes the frame, handler and tabbedPane
+     * It creates the tab
+     * @param frame the JFrame
+     * @param handler the MangaHandler
+     * @param tabbedPane the JTabbedPane
+     */
     public AddMangaTab(JFrame frame, MangaHandler handler, JTabbedPane tabbedPane){
         this.frame = frame;
         this.handler = handler;
@@ -35,11 +47,19 @@ public class AddMangaTab implements TabModel{
         createTab();
     }
 
+    /**
+     * Method to create the tab
+     * It initializes the components and adds the components
+     */
     public void createTab(){
         initComponents();
         addComponents();
     }
 
+    /**
+     * Method to initialize the components
+     * It creates the fields for the manga attributes and the button
+     */
     public void initComponents(){
         addPanel = new JPanel(new GridLayout(13, 2));
         addPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,6 +77,10 @@ public class AddMangaTab implements TabModel{
         addButton = new JButton("Add Manga");
     }
 
+    /**
+     * Method to add the components to the tab
+     * It adds the fields for the manga attributes and the button
+     */
     public void addComponents(){
         addPanel.add(new JLabel("ISBN:"));
         addPanel.add(addIsbnField);
@@ -87,7 +111,13 @@ public class AddMangaTab implements TabModel{
         tabbedPane.addTab("Add Manga", addPanel);
     }
 
-
+    /**
+     * Method to add a manga
+     * It gets the values from the fields and creates a manga object
+     * It adds the manga to the handler
+     * It shows a message dialog with the result
+     * @param e the ActionEvent
+     */
     public void actionPerformed(ActionEvent e) {
         try {
             

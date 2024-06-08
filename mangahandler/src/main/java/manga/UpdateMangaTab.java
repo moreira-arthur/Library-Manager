@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Tab for updating manga
+ * It has fields for the manga attributes and a button to update the manga
+ * It implements the TabModel interface
+ */
 public class UpdateMangaTab implements TabModel {
     private JFrame frame;
     private MangaHandler handler;
@@ -26,6 +31,14 @@ public class UpdateMangaTab implements TabModel {
     private JTextField updateAcquiredVolumesField;
     private JButton updateButton;
 
+    /**
+     * Constructor for the UpdateMangaTab
+     * It initializes the frame, handler and tabbedPane
+     * It creates the tab
+     * @param frame the JFrame
+     * @param handler the MangaHandler
+     * @param tabbedPane the JTabbedPane
+     */
     public UpdateMangaTab(JFrame frame, MangaHandler handler, JTabbedPane tabbedPane){
         this.frame = frame;
         this.handler = handler;
@@ -35,13 +48,19 @@ public class UpdateMangaTab implements TabModel {
     }
 
 
-
+    /**
+     * Method to create the tab
+     * It initializes the components and adds the components
+     */
     public void createTab() {
         initComponents();
         addComponents();
 
     }
 
+    /**
+     * Method to initialize the components
+     */
     public void initComponents() {
         updatePanel = new JPanel(new GridLayout(13, 2));
         updatePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,8 +76,11 @@ public class UpdateMangaTab implements TabModel {
         updateTotalVolumesField = new JTextField();
         updateAcquiredVolumesField = new JTextField();
         updateButton = new JButton("Update Manga");
-    }
+    }   
 
+    /**
+     * Method to add the components
+     */
     public void addComponents() {
         updatePanel.add(new JLabel("ISBN (to be updated):"));
         updatePanel.add(updateIsbnField);
@@ -89,7 +111,12 @@ public class UpdateMangaTab implements TabModel {
         tabbedPane.addTab("Update Manga", updatePanel);
     }
 
-    // Need atention here, because the update is not set ideally
+    /**
+     * Method to update the manga
+     * It gets the values from the fields and updates the manga
+     * It shows a message dialog if the manga is updated successfully or if there is an error
+     * @param e the ActionEvent
+     */
     public void actionPerformed(ActionEvent e) {
         try {
             List<String> authors = Arrays.asList(updateAuthorsField.getText().split(","));

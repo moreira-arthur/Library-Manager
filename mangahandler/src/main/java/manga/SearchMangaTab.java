@@ -6,6 +6,11 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Tab for searching manga
+ * It has fields for the manga attributes and buttons to search the manga
+ * It implements the TabModel interface
+ */
 public class SearchMangaTab implements TabModel{
     private JFrame frame;
     private MangaHandler handler;
@@ -22,6 +27,14 @@ public class SearchMangaTab implements TabModel{
     private JPanel searchInputPanel;
     private JPanel searchButtonPanel;
 
+    /**
+     * Constructor for the SearchMangaTab
+     * It initializes the frame, handler and tabbedPane
+     * It creates the tab
+     * @param frame the JFrame
+     * @param handler the MangaHandler
+     * @param tabbedPane the JTabbedPane
+     */
     public SearchMangaTab(JFrame frame, MangaHandler handler, JTabbedPane tabbedPane){
         this.frame = frame;
         this.handler = handler;
@@ -30,11 +43,18 @@ public class SearchMangaTab implements TabModel{
         createTab();
     }
 
+    /**
+     * Method to create the tab
+     * It initializes the components and adds the components
+     */
     public void createTab() {
         initComponents();
         addComponents();
     }
 
+    /**
+     * Method to initialize the components
+     */
     public void initComponents() {
         searchPanel = new JPanel(new BorderLayout());
         searchPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -50,6 +70,9 @@ public class SearchMangaTab implements TabModel{
         searchButtonPanel = new JPanel(new GridLayout(1, 2));
     }
 
+    /**
+     * Method to add the components
+     */
     public void addComponents() {
         searchInputPanel.add(new JLabel("Search by Title:"));
         searchInputPanel.add(searchTitleField);
@@ -67,6 +90,11 @@ public class SearchMangaTab implements TabModel{
         tabbedPane.addTab("Search Manga", searchPanel);
     }
 
+    /**
+     * Method to handle the action events
+     * It searches the manga by title or isbn
+     * @param e the ActionEvent
+     */
     public void actionPerformed(ActionEvent e) {
         List<Manga> mangas;
         if(e.getSource() == searchByTitleButton){
