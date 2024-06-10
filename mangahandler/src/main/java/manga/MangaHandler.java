@@ -18,7 +18,7 @@ public class MangaHandler {
     private static final String TITLE_INDEX_FILE = "title_index.dat";
     private static final String TEMP_FILE = "temp.dat";
     private static final int RECORD_SIZE = 2048;
-    private List<Long> deletedRecordsSpaces;
+    private final List<Long> deletedRecordsSpaces;
 
     private static final int NOT_FOUND = -1;
 
@@ -50,7 +50,7 @@ public class MangaHandler {
                 pointer += RECORD_SIZE;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error in loadDeletedRecordsSpaces : " + e.getMessage());
         }
     }
 
@@ -154,7 +154,7 @@ public class MangaHandler {
             
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
             dataFile.seek(filePointer);
-            // Marca o registro como deletado
+            //Mark register as deleted
             dataFile.writeChar('*');
             deletedRecordsSpaces.add(filePointer);
         }
@@ -295,7 +295,7 @@ public class MangaHandler {
         String currentIsbn;
         long currentPointer;
 
-        // Lê todos os índices atuais
+        // Read all actual index
         try (RandomAccessFile indexFile = new RandomAccessFile(INDEX_FILE, "r")) {
             while (indexFile.getFilePointer() < indexFile.length()) {
                 currentIsbn = indexFile.readUTF();
@@ -312,7 +312,7 @@ public class MangaHandler {
     
         indexEntries.add(new IndexEntry(isbn, filePointer));
     
-        Collections.sort(indexEntries, Comparator.comparing(IndexEntry::getIsbn));
+        indexEntries.sort(Comparator.comparing(IndexEntry::getIsbn));
     
         try (RandomAccessFile indexFile = new RandomAccessFile(INDEX_FILE, "rw")) {
             indexFile.setLength(0); //Clear the file
@@ -366,7 +366,7 @@ public class MangaHandler {
                 return midEntry.getFilePointer();
             }
         }
-        return NOT_FOUND; // Não encontrado
+        return NOT_FOUND;
     }
 
     /**
@@ -428,7 +428,7 @@ public class MangaHandler {
         titleIndexEntries.add(new TitleIndexEntry(title, isbn));
     
         // Order the title indexes by title
-        Collections.sort(titleIndexEntries, Comparator.comparing(TitleIndexEntry::getTitle));
+        titleIndexEntries.sort(Comparator.comparing(TitleIndexEntry::getTitle));
     
         // Write the title indexes back to the file
         try (RandomAccessFile titleIndexFile = new RandomAccessFile(TITLE_INDEX_FILE, "rw")) {
@@ -449,7 +449,7 @@ public class MangaHandler {
      * @return A list of ISBNs of mangas with the specified title.
      * @throws IOException If an I/O error occurs.
      */
-    private List<String> getIsbnsByTitle(String title) throws IOException {
+    public List<String> getIsbnsByTitle(String title) throws IOException {
 
         List<TitleIndexEntry> titleIndexEntries = new ArrayList<>();
         String temp_currentTitle;    

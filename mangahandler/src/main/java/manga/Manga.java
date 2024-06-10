@@ -20,18 +20,18 @@ import java.util.List;
  */
 public class Manga {
 
-    private String isbn;
-    private String title;
-    private List<String> authors;
-    private int startYear;
-    private int endYear;
-    private String publisher;
-    private String genre;
-    private String magazine;
-    private int editionYear;
-    private int totalVolumes;
-    private int acquiredVolumesCounter;
-    private List<Integer> acquiredVolumes;	
+    private final String isbn;
+    private final String title;
+    private final List<String> authors;
+    private final int startYear;
+    private final int endYear;
+    private final String publisher;
+    private final String genre;
+    private final String magazine;
+    private final int editionYear;
+    private final int totalVolumes;
+    private final int acquiredVolumesCounter;
+    private final List<Integer> acquiredVolumes;
 
 
     /**

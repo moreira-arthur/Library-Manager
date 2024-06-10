@@ -7,8 +7,8 @@ package manga;
  * - isbn: International Standard Book Number
  */
 public class TitleIndexEntry {
-    private String title;
-    private String isbn;
+    private final String title;
+    private final String isbn;
 
     /**
      * Constructor

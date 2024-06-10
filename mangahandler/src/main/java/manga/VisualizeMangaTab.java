@@ -12,9 +12,9 @@ import java.util.List;
  * It implements the TabModel interface
  */
 public class VisualizeMangaTab implements TabModel {
-    private JFrame frame;
-    private MangaHandler handler;
-    private JTabbedPane tabbedPane;
+    private final JFrame frame;
+    private final MangaHandler handler;
+    private final JTabbedPane tabbedPane;
 
     private JPanel viewPanel;
     private JTextArea viewResultsArea;

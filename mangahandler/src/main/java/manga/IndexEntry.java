@@ -7,8 +7,8 @@ package manga;
  * - filePointer: File pointer
  */
 public class IndexEntry {
-    private String isbn;
-    private long filePointer;
+    private final  String isbn;
+    private final  long filePointer;
 
     /**
      * Constructor

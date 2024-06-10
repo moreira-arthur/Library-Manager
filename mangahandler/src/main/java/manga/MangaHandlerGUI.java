@@ -9,9 +9,9 @@ import java.awt.*;
  * The JTabbedPane has tabs for adding, updating, removing, searching and viewing manga
  */
 public class MangaHandlerGUI {
-    private MangaHandler manager;
-    JTabbedPane tabbedPane;
-    JFrame frame;
+    private final MangaHandler manager;
+    private final JTabbedPane tabbedPane;
+    private final JFrame frame;
     
     /**
      * Constructor for the MangaHandlerGUI

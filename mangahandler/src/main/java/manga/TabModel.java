@@ -10,9 +10,9 @@ import java.awt.event.*;
 
 public interface TabModel extends ActionListener{
 
-    public void createTab();
-    public void initComponents();
-    public void addComponents();
+    void createTab();
+    void initComponents();
+    void addComponents();
 
-    public void actionPerformed(ActionEvent e);
+    void actionPerformed(ActionEvent e);
 }   

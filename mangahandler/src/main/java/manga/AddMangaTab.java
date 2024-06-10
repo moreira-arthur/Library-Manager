@@ -13,9 +13,9 @@ import java.util.List;
  * It implements the TabModel interface
  */
 public class AddMangaTab implements TabModel{
-    private JFrame frame;
-    private MangaHandler handler;
-    private JTabbedPane tabbedPane;
+    private final JFrame frame;
+    private final MangaHandler handler;
+    private final JTabbedPane tabbedPane;
     
     private JPanel addPanel;
     private JTextField addIsbnField;
@@ -122,7 +122,7 @@ public class AddMangaTab implements TabModel{
         try {
             
             List<String> authors = Arrays.asList(addAuthorsField.getText().split(","));
-            List<Integer> acquiredVolumes = Arrays.asList(addAcquiredVolumesField.getText().split(",")).stream().map(Integer::parseInt).toList();
+            List<Integer> acquiredVolumes = Arrays.stream(addAcquiredVolumesField.getText().split(",")).map(Integer::parseInt).toList();
 
             Manga manga = new Manga(
                     addIsbnField.getText(),
@@ -141,7 +141,6 @@ public class AddMangaTab implements TabModel{
             handler.addManga(manga);
             JOptionPane.showMessageDialog(frame, "Manga added successfully!");
         } catch (IOException ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(frame, "Error adding manga." + "\n" + ex.getMessage());
         } catch(Exception ex){
             JOptionPane.showMessageDialog(frame, "Error adding manga." + "\n" + "Please check the fields and try again.");
