@@ -66,15 +66,15 @@ public class MangaHandler {
 
         long filePointer;
 
+        if(getPositionFromIndexFile(manga.getIsbn()) != NOT_FOUND){
+            throw new IOException("Manga already exists");
+        }
+
         if (!deletedRecordsSpaces.isEmpty()) {
             filePointer = deletedRecordsSpaces.remove(0);
         } else {
             try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
-                if(getPositionFromIndexFile(manga.getIsbn()) != NOT_FOUND){
-                    throw new IOException("Manga already exists");
-                }else{
                     filePointer = dataFile.length();
-                }
             }catch(FileNotFoundException e){
                 System.out.println("File not found, creating new file...");
                 filePointer = 0;
