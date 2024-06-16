@@ -131,6 +131,12 @@ public class MangaHandler {
         }
         try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "rw")) {
             dataFile.seek(filePointer);
+            // Check if the title has changed and update the title index
+            Manga tempManga = getManga(isbn);
+            if(!tempManga.getTitle().equals(updatedManga.getTitle())){
+                removeTitleIndex(isbn);
+                addTitleIndex(updatedManga.getTitle(), isbn);
+                }
             writeManga(dataFile, updatedManga);
         }catch(FileNotFoundException e){
             System.out.println("File not found");

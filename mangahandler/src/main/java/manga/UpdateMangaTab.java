@@ -20,8 +20,7 @@ public class UpdateMangaTab implements TabModel {
 
     private JPanel updatePanel;
     private JTextField updateTitleSearchField;
-    // private JTextField updateIsbnField;
-    // private JTextField updateTitleField;
+    private JTextField updateTitleField;
     private JTextField updateAuthorsField;
     private JTextField updateStartYearField;
     private JTextField updateEndYearField;
@@ -66,8 +65,7 @@ public class UpdateMangaTab implements TabModel {
         updatePanel = new JPanel(new GridLayout(13, 2));
         updatePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         updateTitleSearchField = new JTextField();
-        // updateIsbnField = new JTextField();
-        // updateTitleField = new JTextField();
+        updateTitleField = new JTextField();
         updateAuthorsField = new JTextField();
         updateStartYearField = new JTextField();
         updateEndYearField = new JTextField();
@@ -88,10 +86,8 @@ public class UpdateMangaTab implements TabModel {
         updatePanel.add(updateTitleSearchField);
         updatePanel.add(new JLabel());
         updatePanel.add(new JLabel());
-        // updatePanel.add(new JLabel("ISBN:"));
-        // updatePanel.add(updateIsbnField);
-        // updatePanel.add(new JLabel("Title:"));
-        // updatePanel.add(updateTitleField);
+        updatePanel.add(new JLabel("Title:"));
+        updatePanel.add(updateTitleField);
         updatePanel.add(new JLabel("Authors (comma separated):"));
         updatePanel.add(updateAuthorsField);
         updatePanel.add(new JLabel("Start Year:"));
@@ -127,14 +123,13 @@ public class UpdateMangaTab implements TabModel {
         try {
             List<String> authors = Arrays.asList(updateAuthorsField.getText().split(","));
             List<Integer> acquiredVolumes = Arrays.stream(updateAcquiredVolumesField.getText().split(",")).map(Integer::parseInt).toList();
-            String updateTitle = updateTitleSearchField.getText();
             List<String> isbns = handler.getIsbnsByTitle(updateTitleSearchField.getText());
             if(isbns.size() == 0) {
                 throw new IOException("Manga not found.");
             }
             Manga updatedManga = new Manga(
                     isbns.get(0),
-                    updateTitle,
+                    updateTitleField.getText(),
                     authors,
                     Integer.parseInt(updateStartYearField.getText()),
                     Integer.parseInt(updateEndYearField.getText()),
