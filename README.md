@@ -40,6 +40,11 @@ Nosso projeto implementa as funcionalidades descritas nos requisitos de forma in
 - Criamos uma classe `Usuario` com atributos como nome e informação de contato.
 - Implementamos métodos para adicionar, editar, excluir e buscar usuários.
 
+### Gerenciamento de Login
+
+- Criamos uma classe `Login` para gerenciar o fluxo de entrada.
+- Implementamos métodos para adicionar, excluir e validar o login.
+
 ### Gerenciamento de Empréstimos
 
 - Criamos uma classe `Emprestimo` para gerenciar os empréstimos de livros.
@@ -87,24 +92,36 @@ Nosso projeto implementa as funcionalidades descritas nos requisitos de forma in
 
 ### Descrição dos Testes
 
-- Realizamos testes unitários para cada classe principal (`Livro`, `Usuario`, `Emprestimo`).
+- Realizamos testes unitários para cada classe principal (`Livro`, `Usuario`, `Emprestimo`, `Login` ) por meio da interface gráfica.
 - Testamos a integração das diferentes partes do sistema.
-- Utilizamos a ferramenta JUnit para automatizar os testes.
 
 ### Resultados dos Testes
 
-- Todos os testes unitários passaram sem erros.
+- Todos os testes por meio da Interface Gráfica passaram sem erros.
 
 ## Procedimentos de Construção
 
 ### Passo-a-Passo para Executar o Código
+1. Clone o repositório:
 
-1. **Instalar Dependências:** Instale o Java JDK.
-2. **Baixar o Projeto:** Clone o repositório do projeto a partir do [link do repositório].
-3. **Construir o Projeto:** Navegue até o diretório do projeto e execute `./gradlew build`.
-4. **Configurar o Ambiente:** Certifique-se de que o Swing está configurado corretamente no seu ambiente.
-5. **Executar o Projeto:** Execute o comando `./gradlew run` para iniciar a aplicação.
+    ```bash
+    git clone https://github.com/moreira-arthur/Library-Manager
+    cd Library-Manager
+    ```
 
+2. Compile o projeto utilizando Maven:
+
+    ```bash
+    mvn clean package 
+    ```
+
+3. Execute a aplicação:
+
+    ```bash
+    cd src/main/java/librarySystem/
+    java Main.java
+    ```
+    
 ## Problemas
 
 - Encontramos dificuldades na integração da GUI com a lógica de negócios, mas resolvemos utilizando padrões de design apropriados.
