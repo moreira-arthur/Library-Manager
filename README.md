@@ -102,26 +102,38 @@ Nosso projeto implementa as funcionalidades descritas nos requisitos de forma in
 ## Procedimentos de Construção
 
 ### Passo-a-Passo para Executar o Código
-1. Clone o repositório:
+0. Verifique a versão do Java e do Maven pelo comando:
+    ```bash
+    java --version
+    mvn --version
+    ```
+    - Caso seja diferente da versão 22 do Java ou 3.8.7 do Maven, recomendamos instalar as versões mais recentes:
+    - JDK 22 - Pode ser obtido em: https://www.oracle.com/br/java/technologies/downloads/#jdk22-linux
+    - Apache Maven 3.8.7 - Pode ser obtido pelo comando no Linux:
+    ```bash
+    sudo apt install maven
+    ```
+    
+2. Clone o repositório:
 
     ```bash
     git clone https://github.com/moreira-arthur/Library-Manager
     cd Library-Manager
     ```
 
-2. Compile o projeto utilizando Maven:
+3. Compile o projeto utilizando Maven:
 
     ```bash
     mvn clean package 
     ```
 
-3. Execute a aplicação:
+4. Execute a aplicação:
 
     ```bash
     cd src/main/java/librarySystem/
     java Main.java
     ```
-4. Ao executar o programa, teste logando como administrador. Nome: "admin", Senha: "adminpsw"
+5. Ao executar o programa, teste logando como administrador. Nome: "admin", Senha: "adminpsw"
     
 ## Problemas
 
