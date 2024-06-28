@@ -121,6 +121,7 @@ Nosso projeto implementa as funcionalidades descritas nos requisitos de forma in
     cd src/main/java/librarySystem/
     java Main.java
     ```
+4. Ao executar o programa, teste logando como administrador. Nome: "admin", Senha: "adminpsw"
     
 ## Problemas
 
