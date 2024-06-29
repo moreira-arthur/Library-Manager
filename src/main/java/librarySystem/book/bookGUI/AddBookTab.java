@@ -121,7 +121,18 @@ public class AddBookTab implements TabModel {
         try {
             
             List<Integer> acquiredVolumes = Arrays.stream(addAcquiredVolumesField.getText().split(",")).map(Integer::parseInt).toList();
-
+            if(addTitleField.getText().isEmpty() ||
+                    addAuthorsField.getText().isEmpty() ||
+                    addStartYearField.getText().isEmpty() ||
+                    addEndYearField.getText().isEmpty() ||
+                    addGenreField.getText().isEmpty() ||
+                    addMagazineField.getText().isEmpty() ||
+                    addPublisherField.getText().isEmpty() ||
+                    addEditionYearField.getText().isEmpty() ||
+                    addTotalVolumesField.getText().isEmpty() ||
+                    addAcquiredVolumesField.getText().isEmpty()) {
+                throw new IOException("All fields must be filled out.");
+            }
             Book book = new Book(
                     addIsbnField.getText(),
                     addTitleField.getText(),

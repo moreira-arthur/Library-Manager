@@ -108,6 +108,13 @@ public class UpdatePatronTab implements TabModel {
             if(cpfs.size() == 0) {
                 throw new IOException("Patron not found.");
             }
+            if(updateNameField.getText().isEmpty() ||
+                    updateLastNameField.getText().isEmpty() ||
+                    updateEmailField.getText().isEmpty() ||
+                    updatePhoneNumberField.getText().isEmpty() ||
+                    updatePasswordField.getText().isEmpty()) {
+                throw new IOException("All fields must be filled out.");
+            }
             Patron updatedPatron = new Patron(
                     updateNameField.getText(),
                     updateLastNameField.getText(),

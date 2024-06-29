@@ -102,6 +102,9 @@ public class SearchPatronTab implements TabModel {
         List<Patron> patrons;
         if(e.getSource() == searchByLastNameButton){
             try {
+                if(searchLastNameField.getText().isEmpty()){
+                    throw new IOException("Please enter a last name.");
+                }
                 patrons = handler.searchPatronsByLastName(searchLastNameField.getText());
                 searchResultsArea.setText("");
                 for (Patron patron : patrons) {
@@ -116,6 +119,9 @@ public class SearchPatronTab implements TabModel {
             }
         } else if(e.getSource() == searchByCpfButton){
             try {
+                if(searchCpfField.getText().isEmpty()){
+                    throw new IOException("Please enter a CPF.");
+                }
                 patrons = handler.searchPatronByCpf(searchCpfField.getText());
                 searchResultsArea.setText("");
                 for (Patron patron : patrons) {

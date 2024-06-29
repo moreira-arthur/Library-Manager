@@ -93,6 +93,10 @@ public class RemoveBookTab implements TabModel {
         if (confirm == JOptionPane.YES_OPTION) {
             if (e.getSource() == removeByIsbnButton) {
                 try {
+                    if(removeIsbnField.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Please enter an ISBN.");
+                        return;
+                    }
                     handler.deleteBook(removeIsbnField.getText());
                     JOptionPane.showMessageDialog(frame, "Book removed successfully!");
                 } catch (IOException ex) {
@@ -102,6 +106,10 @@ public class RemoveBookTab implements TabModel {
                 
             }else if (e.getSource() == removeByTitleButton) {
                 try {
+                    if(removeTitleField.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Please enter a title.");
+                        return;
+                    }
                     List<Book> books = handler.searchBooksByTitle(removeTitleField.getText());
                     if (!books.isEmpty()) {
                         handler.deleteBook(books.get(0).getIsbn());

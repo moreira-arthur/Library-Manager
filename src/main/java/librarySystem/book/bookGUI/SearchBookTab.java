@@ -144,6 +144,9 @@ public class SearchBookTab implements TabModel{
         if (e.getSource() == searchByTitleButton) {
             query = searchTitleField.getText();
             try {
+                if(query.isEmpty()){
+                    throw new IOException("Title cannot be empty.");
+                }
                 books = handler.searchBooksByTitle(query);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -152,6 +155,9 @@ public class SearchBookTab implements TabModel{
         } else if (e.getSource() == searchByIsbnButton) {
             query = searchIsbnField.getText();
             try {
+                if(query.isEmpty()){
+                    throw new IOException("ISBN cannot be empty.");
+                }
                 books = handler.searchBookByIsbn(query);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -160,6 +166,9 @@ public class SearchBookTab implements TabModel{
         } else if (e.getSource() == searchByAuthorButton) {
             query = searchAuthorField.getText();
             try {
+                if(query.isEmpty()){
+                    throw new IOException("Author cannot be empty.");
+                }
                 books = handler.searchBooksByAuthor(query);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -168,6 +177,9 @@ public class SearchBookTab implements TabModel{
         } else if (e.getSource() == searchByGenreButton) {
             query = searchGenreField.getText();
             try {
+                if(query.isEmpty()){
+                    throw new IOException("Genre cannot be empty.");
+                }
                 books = handler.searchBooksByGenre(query);
             } catch (IOException ex) {
                 ex.printStackTrace();

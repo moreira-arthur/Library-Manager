@@ -109,7 +109,7 @@ public class PatronHandler {
 
             if (filePointer == NOT_FOUND){
                 System.out.println("patron not found");
-                return null;
+                throw new IOException("Patron not found");
             }
             try (RandomAccessFile dataFile = new RandomAccessFile(DATA_FILE, "r")) {
                 dataFile.seek(filePointer);

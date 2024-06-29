@@ -78,12 +78,20 @@ public class CloseLoanTab implements TabModel {
      */
     public void actionPerformed(ActionEvent e) {
         try {
-            handler.closeLoan(getIsbnField.getText());
+            String isbn = getIsbnField.getText();
+            if(isbn.isEmpty()){
+                throw new Exception("Please fill in the fields.");
+            }
+            if(!handler.checkLoan(isbn).isEmpty()){
+                handler.closeLoan(isbn);
+            } else {
+                throw new Exception("Loan not found.");
+            }
             JOptionPane.showMessageDialog(frame, "Loan closed successfully!");
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(frame, "Error adding book." + "\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(frame, "Error closing loan book." + "\n" + ex.getMessage());
         } catch(Exception ex){
-            JOptionPane.showMessageDialog(frame, "Error adding book." + "\n" + "Please check the fields and try again.");
+            JOptionPane.showMessageDialog(frame, "Error closing loan book." + "\n" + "Please check the fields and try again.");
         }
     }
 

@@ -130,6 +130,18 @@ public class UpdateBookTab implements TabModel {
             if(isbns.size() == 0) {
                 throw new IOException("Book not found.");
             }
+            if(updateTitleField.getText().isEmpty() ||
+                    updateAuthorField.getText().isEmpty() ||
+                    updateStartYearField.getText().isEmpty() ||
+                    updateEndYearField.getText().isEmpty() ||
+                    updateGenreField.getText().isEmpty() ||
+                    updateMagazineField.getText().isEmpty() ||
+                    updatePublisherField.getText().isEmpty() ||
+                    updateEditionYearField.getText().isEmpty() ||
+                    updateTotalVolumesField.getText().isEmpty() ||
+                    updateAcquiredVolumesField.getText().isEmpty()) {
+                throw new IOException("All fields must be filled out.");
+            }
             Book updatedBook = new Book(
                     isbns.get(0),
                     updateTitleField.getText(),

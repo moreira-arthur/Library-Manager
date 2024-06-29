@@ -84,6 +84,9 @@ public class AddLoginTab implements TabModel {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         try {
+            if(username.isEmpty() || password.isEmpty()) {
+                throw new IOException("Username and password cannot be empty");
+            }
             loginHandler.addLogin(new Login(username, password));
             JOptionPane.showMessageDialog(frame, "Login added successfully!");
         } catch (IOException ex) {

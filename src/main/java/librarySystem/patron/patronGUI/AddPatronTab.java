@@ -97,6 +97,14 @@ public class AddPatronTab implements TabModel {
      */
     public void actionPerformed(ActionEvent e) {
         try {
+            if (addNameField.getText().isEmpty() ||
+            addLastNameField.getText().isEmpty() ||
+            addCpfField.getText().isEmpty() ||
+            addPasswordField.getText().isEmpty() ||
+            addEmailField.getText().isEmpty() ||
+            addPhoneNumberField.getText().isEmpty()) {
+                throw new IOException("All fields must be filled out.");
+            }
             Patron patron = new Patron(
                     addNameField.getText(),
                     addLastNameField.getText(),

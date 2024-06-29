@@ -91,6 +91,10 @@ public class RemovePatronTab implements TabModel {
         if (confirm == JOptionPane.YES_OPTION) {
             if (e.getSource() == removeByCpfButton) {
                 try {
+                    if(removeCpfField.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Please enter a CPF.");
+                        return;
+                    }
                     handler.deletePatron(removeCpfField.getText());
                     JOptionPane.showMessageDialog(frame, "Patron removed successfully!");
                 } catch (IOException ex) {
@@ -100,6 +104,10 @@ public class RemovePatronTab implements TabModel {
 
             }else if (e.getSource() == removeByLastNameButton) {
                 try {
+                    if(removeLastNameField.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Please enter a last name.");
+                        return;
+                    }
                     List<Patron> patrons = handler.searchPatronsByLastName(removeLastNameField.getText());
                     if (!patrons.isEmpty()) {
                         handler.deletePatron(patrons.get(0).getCpf());
